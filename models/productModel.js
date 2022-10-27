@@ -7,19 +7,24 @@ const productSchema = new Schema({
     product_id: {
         type: Number,
     },
-    item_id: {
-        type: Number,
-    },
-    item_name: {
-        type: Number,
+    product_name: {
+        type: String,
         required: true, 
     },
-    item_imageuri:{
+    product_category: {
         type: String,
-        required: false,
+        required: true, 
     },
-    item_qty: {
-        type: Number,
+    product_disc: {
+        type: String,
+        required: false, 
+    },
+    product_imageuri:{
+        type: String,
         required: true,
-    }
+    },
 })
+
+productSchema.plugin(AutoIncrement, { inc_field: 'product_id' });
+const Product = mongoose.model('product', productSchema); // save product in db
+module.exports = Product;
