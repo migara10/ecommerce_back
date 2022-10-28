@@ -1,4 +1,5 @@
 // import modules
+require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -23,7 +24,7 @@ app.use(bodyParser.json());
 app.use('/product', product);
 app.use('/upload', express.static('upload')); // get images in the server
 
-const db = "mongodb+srv://migara:game1994@unilog.z3swk.mongodb.net/ecom?retryWrites=true&w=majority";
+const db = process.env.DB_URI;
 mongoose.connect(db, err => {
     if (err) {
         console.log(err)
