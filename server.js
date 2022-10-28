@@ -19,8 +19,9 @@ const item = require('./routes/items');
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
-app.use(bodyParser.json())
-app.use('/product', product)
+app.use(bodyParser.json());
+app.use('/product', product);
+app.use('/upload', express.static('upload')); // get images in the server
 
 const db = "mongodb+srv://migara:game1994@unilog.z3swk.mongodb.net/ecom?retryWrites=true&w=majority";
 mongoose.connect(db, err => {
