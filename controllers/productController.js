@@ -12,6 +12,8 @@ module.exports.saveProduct = async (req, res) => {
     }
 }
 
-module.exports.getProductById = (req,res) => {
-    console.log('hryryr')
+module.exports.getProductById = async (req,res) => {
+    const allProducts = await productModel.find({});
+    // console.log(allProducts);
+    res.status(200).json({state:true, msg: "new product saved successfully!", data:allProducts})
 }
