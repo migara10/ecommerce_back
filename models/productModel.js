@@ -23,6 +23,10 @@ const productSchema = new Schema({
         type: String,
         required: true,
     },
+    product_price: {
+        type: String,
+        required: true,
+    }
 })
 
 productSchema.plugin(AutoIncrement, { inc_field: 'product_id' });
