@@ -22,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json());
 app.use('/product', product);
+app.use('/item', item);
 app.use('/upload', express.static('upload')); // get images in the server
 
 const db = process.env.DB_URI;
