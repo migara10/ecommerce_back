@@ -10,7 +10,7 @@ const itemSchema = new Schema({
     item_name: {
         type: String,
         required: true,
-        enum: ['s', 'm', 'l', 'xl'],
+        enum: ['xs','s', 'm', 'l', 'xl'],
     },
     item_id: {
         type: String,
@@ -45,6 +45,9 @@ itemSchema.pre('save', function (next) {
     let itemCode = ''
     if (this.item_name) {
         switch (this.item_name) {
+            case "xs":
+                this.itemCode = 100;
+                break;
             case "s":
                 this.itemCode = 101;
                 break;
