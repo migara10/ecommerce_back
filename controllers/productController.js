@@ -2,21 +2,21 @@ const productModel = require('../models/productModel');
 
 module.exports.saveProduct = async (req, res) => {
     let newProduct = productModel(req.body);
-    try{
+    try {
         const savedProduct = await productModel.create(newProduct);
-        res.status(200).json({state:true, msg: "new product saved successfully!"})
+        res.status(200).json({ state: true, msg: "new product saved successfully!" })
 
-    }catch(error) {
+    } catch (error) {
         console.log(error)
-        res.status(400).json({state:false, msg: "new product saved unsuccessfully!"})
+        res.status(400).json({ state: false, msg: "new product saved unsuccessfully!" })
     }
 }
 
-module.exports.getProductById = async (req,res) => {
+module.exports.getProductById = async (req, res) => {
     /* const allProducts = await productModel.find({});
     console.log(allProducts);
     res.status(200).json({state:true, msg: "new product saved successfully!", data:allProducts}) */
-    
+
     var pipeline = [
         // { "$match": { "cust_id": { "$exists": true } } },
         // { "$match": { "cust_id": 54 } },
@@ -31,14 +31,23 @@ module.exports.getProductById = async (req,res) => {
         .then((result) => {
             // console.log(result[0].orders_info)
             // console.log(result)
-            res.status(200).json({state:true, msg: "new product saved successfully!", data:result})
+            res.status(200).json({ state: true, msg: "new product saved successfully!", data: result })
         })
         .catch((error) => {
             console.log(error);
         });
 }
 
-async function getAllProductsbyItems(){
+module.exports.updateProduct = async (req,res) => {
+    // console.log(req.body);
+    const data = req.body;
+    data.forEach((x) => {
+        console.log(x.data.item_id)
+        console.log(x.data.item_qty-x.qty)
+    })
+}
+
+async function getAllProductsbyItems() {
     var pipeline = [
         // { "$match": { "cust_id": { "$exists": true } } },
         // { "$match": { "cust_id": 54 } },
