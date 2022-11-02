@@ -38,14 +38,7 @@ module.exports.getProductById = async (req, res) => {
         });
 }
 
-module.exports.updateProduct = async (req,res) => {
-    // console.log(req.body);
-    const data = req.body;
-    data.forEach((x) => {
-        console.log(x.data.item_id)
-        console.log(x.data.item_qty-x.qty)
-    })
-}
+
 
 async function getAllProductsbyItems() {
     var pipeline = [
