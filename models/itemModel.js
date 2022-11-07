@@ -19,26 +19,6 @@ const itemSchema = new Schema({
         type: Number,
         required: true,
     }
-    /* item_id: {
-        type: String,
-        default: () => {
-            if (this.item_name) {
-                return this.item_name
-            } return false
-        },
-    }, */
-    /* item_name: {
-        type: Number,
-        required: true, 
-    },
-    item_imageuri:{
-        type: String,
-        required: false,
-    },
-    item_qty: {
-        type: Number,
-        required: true,
-    } */
 })
 
 itemSchema.pre('save', function (next) {
