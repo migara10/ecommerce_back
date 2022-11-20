@@ -4,7 +4,23 @@ const emitterFile = require('./my_emitter');
 const myEmitter = emitterFile.emitter;
 
 module.exports.getAllOrders = async (req,res) => {
-    console.log('jjkjjjj')
+    var pipeline = [
+        // { "$match": { "cust_id": { "$exists": true } } },
+        // { "$match": { "cust_id": 54 } },
+        // {"$group" : {"_id":null, "order_value":{"$sum":"$order_value"}}}, 
+        { "$lookup": { "from": "item_records", "localField": "order_id", "foreignField": "orders_id", "as": "orderItems" } },
+        // {"$group" : {'_id':'$shipper_id'}}, 
+        // {"$group" : {"_id":"$city", "order_value":{"$avg":"$cust_id"}}}, 
+        // { "$unwind": "$productbyItem" },
+        // {"$project": {"cus_id":"$cust_id","order_value":"$orders_info.order_value",_id:0}}
+    ]
+    orderModel.aggregate(pipeline)
+        .then((result) => {
+            res.status(200).json({ state: true, data: result })
+        })
+        .catch((error) => {
+            res.status(400).json({ state: true, msg: "can't gel all orders!"})
+        });
 }
 
 module.exports.createNewOrder = async (req, res) => {
@@ -24,7 +40,7 @@ module.exports.createNewOrder = async (req, res) => {
     }); */
     try {
         const savedOrder = await orderModel.create(req.body.user);
-        res.status(200).json({ state: true, msg: "new order saved successfully!" })
+        res.status(200).json({ state: true, msg: "checkout successfully!" })
         if (savedOrder) {
             const data = req.body.item;
             data.forEach(element => {
@@ -34,10 +50,12 @@ module.exports.createNewOrder = async (req, res) => {
                         item_id: element.data.item_id,
                         item_name: element.data.item_name,
                         product_name: element.product_name,
+                        product_imageuri: element.product_imageuri,
+                        product_disc: element.product_disc,
                         qty: element.qty
                     },
                 ]).then(function () {
-                    console.log("Data inserted")  // Success
+                   // console.log("Data inserted")  // Success
                 }).catch(function (error) {
                     console.log(error)      // Failure
                 });

@@ -21,7 +21,15 @@ const itemRecords = new Schema({
     },
     qty: {
         type: Number
-    }
+    },
+    product_imageuri: {
+        type: String,
+        required: true,
+    },
+    product_disc: {
+        type: String,
+        required: true,
+    },
 
 })
 
