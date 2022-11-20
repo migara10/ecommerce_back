@@ -15,13 +15,27 @@ const orderSchema = new Schema({
         type: Boolean,
         default: true,
     },
-    mobile: {
+    email: {
         type: String,
-
     },
     firstName: {
         type: String,
-    }
+    },
+    lastName: {
+        type: String,
+    },
+    address: {
+        type: String,
+    },
+    city: {
+        type: String,
+    },
+    postalCode: {
+        type: String,
+    },
+    mobile: {
+        type: String,
+    },
 
 
 })

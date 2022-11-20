@@ -37,7 +37,6 @@ module.exports.saveItem = async (req, res) => {
 } */
 
 module.exports.updateProduct = async (data) => {
-    console.log('update', data)
     
     try {
         const writeOperations = data.map((x) => {
