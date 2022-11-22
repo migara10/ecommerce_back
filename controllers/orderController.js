@@ -3,7 +3,7 @@ const ItemRecordModel = require('../models/itemRocordModel');
 const emitterFile = require('./my_emitter');
 const myEmitter = emitterFile.emitter;
 
-module.exports.getAllOrders = async (req,res) => {
+/* module.exports.getAllOrders = async (req,res) => {
     var pipeline = [
         // { "$match": { "cust_id": { "$exists": true } } },
         // { "$match": { "cust_id": 54 } },
@@ -22,6 +22,53 @@ module.exports.getAllOrders = async (req,res) => {
             res.status(400).json({ state: true, msg: "can't gel all orders!"})
         });
 }
+ */
+
+module.exports.getAllOrders = async (req, res) => {
+    let match = {};
+    let page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 1;
+    let skip = limit * (page - 1);
+    if (req.query.search) {
+        match.$or = [
+            { firstName: new RegExp(req.query.search, "i") },
+            { lastName: new RegExp(req.query.search, "i") },
+        ]
+    }
+    if (req.query.city) {
+        match.city = (req.query.city)
+    }
+    var pipeline = [
+        { $match: match },
+        { "$lookup": { "from": "item_records", "localField": "order_id", "foreignField": "orders_id", "as": "orderItems" } },
+        {
+            $facet: {
+                data: [{ $skip: skip }, { $limit: limit }],
+                dataInfo: [{ $group: { _id: null, count: { $sum: 1 } } }]
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                docs: "$data",
+                // totalDocs: "$dataInfo",
+                totalDocs: {$first: "$dataInfo.count"},
+                limit: `${limit}`,
+                // totalDocs: "$dataInfo.count",
+                page: `${page}`
+            }
+        },
+
+    ]
+    orderModel.aggregate(pipeline)
+        .then((result) => {
+            res.status(200).json({ state: true, data: result })
+        })
+        .catch((error) => {
+            res.status(400).json({ state: true, msg: "can't gel all orders!" })
+        });
+}
+
 
 module.exports.createNewOrder = async (req, res) => {
     myEmitter.emit("update_order", req.body.item)
@@ -55,7 +102,7 @@ module.exports.createNewOrder = async (req, res) => {
                         qty: element.qty
                     },
                 ]).then(function () {
-                   // console.log("Data inserted")  // Success
+                    // console.log("Data inserted")  // Success
                 }).catch(function (error) {
                     console.log(error)      // Failure
                 });
