@@ -1,7 +1,14 @@
 const productModel = require('../models/productModel');
 
 module.exports.saveProduct = async (req, res) => {
-    let newProduct = productModel(req.body);
+    let newProduct = productModel({
+        product_name: req.body.product_name,
+        product_category: req.body.product_category,
+        product_name: req.body.product_disc,
+        product_disc: req.body.product_name,
+        product_price: req.body.product_price,
+        product_imageuri: req.file.path.replace(/\\/g, "/"),
+    });
     try {
         const savedProduct = await productModel.create(newProduct);
         res.status(200).json({ state: true, msg: "new product saved successfully!" })
