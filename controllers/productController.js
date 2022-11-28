@@ -11,7 +11,7 @@ module.exports.saveProduct = async (req, res) => {
     });
     try {
         const savedProduct = await productModel.create(newProduct);
-        res.status(200).json({ state: true, msg: "new product saved successfully!" })
+        res.status(200).json({ state: true, msg: "new product saved successfully!", data: savedProduct })
 
     } catch (error) {
         console.log(error)
@@ -19,7 +19,7 @@ module.exports.saveProduct = async (req, res) => {
     }
 }
 
-module.exports.getProductById = async (req, res) => {
+module.exports.getProducts = async (req, res) => {
     /* const allProducts = await productModel.find({});
     console.log(allProducts);
     res.status(200).json({state:true, msg: "new product saved successfully!", data:allProducts}) */
@@ -29,6 +29,7 @@ module.exports.getProductById = async (req, res) => {
         // { "$match": { "cust_id": 54 } },
         // {"$group" : {"_id":null, "order_value":{"$sum":"$order_value"}}}, 
         { "$lookup": { "from": "items", "localField": "product_id", "foreignField": "product_id", "as": "productbyItem" } },
+        // {"$sort": {"productbyItem.item_id": 1}},
         // {"$group" : {'_id':'$shipper_id'}}, 
         // {"$group" : {"_id":"$city", "order_value":{"$avg":"$cust_id"}}}, 
         // { "$unwind": "$productbyItem" },
@@ -43,6 +44,18 @@ module.exports.getProductById = async (req, res) => {
         .catch((error) => {
             console.log(error);
         });
+}
+module.exports.getProductById = async (req, res) => {
+   var pipeline = [
+    { $match: { product_id: parseInt(req.params.id) } },
+]
+productModel.aggregate(pipeline)
+    .then((product) => {
+        res.status(200).json({ state: true, data: product })
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 }
 
 

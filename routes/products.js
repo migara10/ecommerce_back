@@ -16,7 +16,8 @@ const upload = multer({
 
 
 router.post('/', upload.single('file'), productController.saveProduct); // create new product
-router.get('/', productController.getProductById); // get product
+router.get('/', productController.getProducts); // get product
+router.get('/:id', productController.getProductById); // get product
 
 
 module.exports = router;
