@@ -10,18 +10,18 @@ const itemSchema = new Schema({
     item_name: {
         type: String,
         required: true,
-        enum: ['xs','s', 'm', 'l', 'xl'],
+        enum: ['xs', 's', 'm', 'l', 'xl'],
     },
     item_id: {
         type: String,
     },
     item_qty: {
         type: Number,
-        required: true,
+        default: 0,
     }
 })
 
-itemSchema.pre('save', function (next) {
+/* itemSchema.pre('save', function (next) {
     let itemCode = ''
     if (this.item_name) {
         switch (this.item_name) {
@@ -45,7 +45,7 @@ itemSchema.pre('save', function (next) {
     }
 
     next();
-});
+}); */
 
 // itemSchema.plugin(AutoIncrement, { inc_field: 'item_id' });
 const Item = mongoose.model('item', itemSchema); // save item in db
