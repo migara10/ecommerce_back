@@ -26,7 +26,14 @@ const productSchema = new Schema({
     product_price: {
         type: String,
         required: true,
-    }
+    },
+    product_promo_price: {
+        type: String,
+    },
+    isPromo: {
+        type: Boolean,
+        default: false,
+    },
 })
 
 productSchema.plugin(AutoIncrement, { inc_field: 'product_id' });
