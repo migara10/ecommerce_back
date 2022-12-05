@@ -24,11 +24,12 @@ const productSchema = new Schema({
         required: true,
     },
     product_price: {
-        type: String,
+        type: Number,
         required: true,
     },
     product_promo_price: {
-        type: String,
+        type: Number,
+        default: 0,
     },
     isPromo: {
         type: Boolean,
