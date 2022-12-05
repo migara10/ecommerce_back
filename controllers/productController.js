@@ -20,17 +20,18 @@ module.exports.saveProduct = async (req, res) => {
 }
 module.exports.editProduct = async (req, res) => {
     let newProduct = productModel({
+        _id:req.body._id,
         product_name: req.body.product_name,
         product_category: req.body.product_category,
         product_name: req.body.product_disc,
         product_disc: req.body.product_name,
         product_price: req.body.product_price,
-        product_imageuri: "",
-        // product_imageuri: req.file.path.replace(/\\/g, "/"),
+        product_imageuri: req.file.path.replace(/\\/g, "/"),
     });
     const query = { product_id: parseInt(req.body.product_id) }
     try {
-        const savedProduct = await productModel.updateOne(query, req.body);
+        const savedProduct = await productModel.updateOne(query, newProduct);
+        console.log(req.body)
         res.status(200).json({ state: true, msg: "new product saved successfully!", data: savedProduct })
 
     } catch (error) {
