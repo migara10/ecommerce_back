@@ -26,6 +26,8 @@ module.exports.editProduct = async (req, res) => {
         product_name: req.body.product_disc,
         product_disc: req.body.product_name,
         product_price: req.body.product_price,
+        product_promo_price: req.body.product_promo_price,
+        isPromo: req.body.isPromo,
         product_imageuri:req.file? req.file.path.replace(/\\/g, "/"): req.body.product_imageuri,
     });
     const query = { product_id: parseInt(req.body.product_id) }
