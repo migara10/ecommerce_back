@@ -4,8 +4,7 @@ module.exports.saveProduct = async (req, res) => {
     let newProduct = productModel({
         product_name: req.body.product_name,
         product_category: req.body.product_category,
-        product_name: req.body.product_disc,
-        product_disc: req.body.product_name,
+        product_disc: req.body.product_disc,
         product_price: req.body.product_price,
         product_imageuri: req.file.path.replace(/\\/g, "/"),
     });
@@ -23,8 +22,7 @@ module.exports.editProduct = async (req, res) => {
         _id:req.body._id,
         product_name: req.body.product_name,
         product_category: req.body.product_category,
-        product_name: req.body.product_disc,
-        product_disc: req.body.product_name,
+        product_disc: req.body.product_disc,
         product_price: req.body.product_price,
         product_promo_price: req.body.product_promo_price,
         isPromo: req.body.isPromo,
