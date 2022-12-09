@@ -40,7 +40,7 @@ module.exports.getAllOrders = async (req, res) => {
     }
     var pipeline = [
         { $match: match },
-        { "$lookup": { "from": "item_records", "localField": "order_id", "foreignField": "orders_id", "as": "orderItems" } },
+        { $lookup: { from: "item_records", localField: "order_id", foreignField: "orders_id", as: "orderItems" } },
         {
             $facet: {
                 data: [{ $skip: skip }, { $limit: limit }],
@@ -52,7 +52,7 @@ module.exports.getAllOrders = async (req, res) => {
                 _id: 0,
                 docs: "$data",
                 // totalDocs: "$dataInfo",
-                totalDocs: {$first: "$dataInfo.count"},
+                totalDocs: { $first: "$dataInfo.count" },
                 limit: `${limit}`,
                 // totalDocs: "$dataInfo.count",
                 page: `${page}`
