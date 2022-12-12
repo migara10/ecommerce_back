@@ -16,6 +16,7 @@ app.use(cors());
 const product = require('./routes/products');
 const item = require('./routes/items');
 const order = require('./routes/order');
+const auth = require('./routes/auth')
 
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -25,6 +26,7 @@ app.use(bodyParser.json());
 app.use('/product', product);
 app.use('/item', item);
 app.use('/order', order);
+app.use('/auth', auth);
 app.use('/upload', express.static('upload')); // get images in the server
 
 const db = process.env.DB_URI;
