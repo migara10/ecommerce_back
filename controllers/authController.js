@@ -9,5 +9,4 @@ module.exports.registerUser = async (req,res) => {
             res.send(user)
         });
     });
-    // console.log('hii', req.body)
 }
