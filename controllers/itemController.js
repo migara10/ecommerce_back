@@ -47,28 +47,6 @@ getItemId = (product_id, item_name) => {
     }
 }
 
-/* module.exports.updateProduct = async (req, res) => {
-    console.log('update', req.body)
-    
-    try {
-        const writeOperations = req.body.map((x) => {
-            return {
-                updateOne: {
-                    filter: { item_id: x.data.item_id },
-                    update: { item_qty: (x.data.item_qty - x.qty) }
-                }
-            };
-        });
-
-        await itemsModal.bulkWrite(writeOperations);
-
-        res.status(200).json({ state: true, msg: 'checkout successfully' })
-    } catch (e) {
-        res.status(400).json({ state: false, msg: 'checkout unsuccessfully' })
-    }
-
-} */
-
 module.exports.updateProduct = async (data) => {
 
     try {
@@ -85,7 +63,7 @@ module.exports.updateProduct = async (data) => {
 
         // res.status(200).json({ state: true, msg: 'checkout successfully' })
     } catch (e) {
-        // res.status(400).json({ state: false, msg: 'checkout unsuccessfully' })
+        res.status(400).json({ state: false, msg: 'update product unsuccessfully' })
     }
 
 }
